@@ -10,14 +10,16 @@ const createUser = async (req: Request, res: Response) => {
     )
     RETURNING id;
 `);
-  res.send(result);
+  if (result.length === 0) return res.sendStatus(409);
+  res.sendStatus(200);
 }
 
 const login = async (req: any, res: Response) => {
   const { email, password } = req.body;
   const result = await executeQuery(`SElECT 1 FROM users WHERE email='${email}' AND password='${password}';
 `);
-  res.send(result);
+  if (result.length === 0) return res.sendStatus(401);
+  res.sendStatus(200);
 }
 
 

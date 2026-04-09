@@ -8,11 +8,11 @@ const clientConfig = {
   port: process.env.DB_PORT || 5432,
 };
 
-async function executeQuery(query: string) {
-    const client = new Client(clientConfig);
+async function executeQuery(query: string, values?: any[]) {
+  const client = new Client(clientConfig);
   try {
     await client.connect();
-    const result = await client.query(query);
+    const result = await client.query(query, values);
     return result.rows;
   } catch (error) {
     console.error('Error executing DB request:', error);
